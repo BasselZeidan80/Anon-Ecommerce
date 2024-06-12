@@ -1,0 +1,11 @@
+.handleImgSize {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+}
+
+.handleImgSize figure {
+    width: 50%;
+    margin-top: 10px;
+}
