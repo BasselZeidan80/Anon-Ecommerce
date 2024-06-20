@@ -1,9 +1,36 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import logo from "../../assets/images/logo/favicon.ico";
 import svgIcon from "../../assets/images/logo/logo.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
-export default function Navbar() {
+import { AuthContext } from "../../Context/AuthContext";
+export default function Navbar({setSearchQuery}) {
+
+const {user ,myToken , setToken}= useContext(AuthContext)
+console.log("user==",user);
+console.log("token In Nvabar ==" ,myToken);
+const [inputValue, setInputValue] = useState("")
+const navigate = useNavigate()
+
+function logOut(){
+  //1 set token == null
+  setToken(null)
+  
+  //2 remove localStorage 
+  localStorage.clear()
+  //3 navigate
+  navigate('/Login')
+ 
+}
+ 
+ 
+
+const handleSearch = (e)=> {
+  e.preventDefault()
+  setSearchQuery(inputValue)
+  // navigate('/Home');
+
+}
   return (
     <>
       <nav className="navbar navbar-expand-lg   bg-body-tertiary">
@@ -30,12 +57,12 @@ export default function Navbar() {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            {myToken? <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <Link
                   className="nav-link active"
                   aria-current="page"
-                  to="/Products"
+                  to="/Home"
                 >
                   Home
                 </Link>
@@ -46,7 +73,7 @@ export default function Navbar() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/Products">
+                <Link className="nav-link" to="/Home">
                   Products
                 </Link>
               </li>
@@ -61,9 +88,12 @@ export default function Navbar() {
                 </Link>
               </li>
             </ul>
-
+:"" }
+           
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-              <li className="nav-item">
+              {myToken ? <>
+              
+                <li className="nav-item">
                 <ul className="d-flex  list-unstyled">
                   <li>
                     <i className="me-2  fa-brands fa-instagram"></i>
@@ -80,12 +110,16 @@ export default function Navbar() {
                 </ul>
               </li>
 
-              <form className="d-flex" role="search">
+              <form className="d-flex" role="search" onSubmit={handleSearch}>
                 <input
                   className="form-control me-2"
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  value={inputValue}
+
+                  onChange={(e)=> setInputValue(e.target.value)} 
+
                 />
                 <button className="btn btn-outline-success" type="submit">
                   Search
@@ -93,9 +127,13 @@ export default function Navbar() {
               </form>
               <li className="nav-item">
                 <Link className="nav-link active" aria-current="page" href="#">
-                  Profile
+                  Profile {user.name}
                 </Link>
               </li>
+              
+              </>: ""}
+
+             
 
               <li className="nav-item dropdown">
                 <Link
@@ -108,14 +146,27 @@ export default function Navbar() {
                   Register
                 </Link>
                 <ul className="dropdown-menu">
+
+                  {myToken?  <li>
+                    <span onClick={logOut} className="dropdown-item" >
+                      SignOut
+                    </span>
+                  </li> :   <>
+                  
                   <li>
-                    <Link className="dropdown-item" to="/LogOut">
-                      Log Out
-                    </Link>
+                    <Link className="dropdown-item" to="/login">Login</Link>
                   </li>
                   <li>
-                    <span className="dropdown-item">Login</span>
+                    <Link className="dropdown-item" to="/signup">Sign Up</Link>
                   </li>
+                  
+                  </>
+                  
+                  
+                  
+                  }
+                 
+                
                 </ul>
               </li>
             </ul>

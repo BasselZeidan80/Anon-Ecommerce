@@ -1,8 +1,20 @@
-import React from "react";
-import { Formik, useFormik } from "formik";
+import React, { useState } from "react";
+import {  useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { ColorRing } from "react-loader-spinner";
+import img from "../../assets/images/blog-1.jpg";
+import './Register.css'
+import { useNavigate } from "react-router-dom";
 export default function SignUp() {
+const [isSuccess, setIsSuccess] = useState(false)
+const [iserror, setIserror] = useState(undefined)
+const [isLoading, setIsLoading] = useState(false)
+
+
+
+const navigate =  useNavigate()
+
   const userData = {
     name: "",
     email: "",
@@ -29,15 +41,33 @@ export default function SignUp() {
       .required("Confirm Password is required"),
   });
 
+
+
+  
   async function submit(values) {
+    setIsLoading(true); 
+
     console.log(values);
     const res = await axios
       .post(`https://ecommerce.routemisr.com/api/v1/auth/signup`, values)
       .then((res) => {
         console.log(res.data);
+        setIsSuccess(true);
+        setIsLoading(false);
+        setInterval(() => {
+          setIsSuccess(false);
+          navigate('/login');
+        }, 2000);
+
+
       })
       .catch((err) => {
+        setIsLoading(false);
         console.log("====err", err.response.data.message);
+        setIserror(err.response.data.message);
+        setInterval(() => {
+          setIserror(undefined);
+        }, 2000);
       });
   }
 
@@ -47,23 +77,22 @@ export default function SignUp() {
 
     onSubmit: submit,
   });
-
-  // async function sendUserData(values) {
-  //   const res = await axios
-  //     .post(`https://ecommerce.routemisr.com/api/v1/auth/signup`, values)
-  //     .then((data) => {
-  //       console.log(data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  //   console.log(res.data);
-  // }
-
+ 
   return (
     <>
-      <div className="designContent d-flex   align-items-center justify-content-center h-100">
+      <div className="designContent d-flex   align-items-center justify-content-between ">
+
+
+        <figure className="imgCst hide-on-small-screen">
+          <img src={img}  alt="" />
+        </figure>
+
         <div className="container p-5">
+    
+
+          {isSuccess?  <div className="alert text-center alert-success">congratulations your account has been created</div> : ""}
+      
+      {iserror?  <div className="alert text-center alert-danger">{iserror}</div> : ""}
           <h2>Register Now:</h2>
           <form onSubmit={myForm.handleSubmit}>
             <div className="form-group my-3">
@@ -100,6 +129,7 @@ export default function SignUp() {
                 name="email"
                 placeholder="Enter your email"
                 className="form-control"
+                autoComplete="username"
               />
               {myForm.errors.email && myForm.touched.email ? (
                 <div className="alert alert-danger">{myForm.errors.email}</div>
@@ -140,6 +170,8 @@ export default function SignUp() {
                 name="password"
                 placeholder="Enter your password"
                 className="form-control"
+                autoComplete="new-password"
+                
               />
               {myForm.errors.password && myForm.touched.password ? (
                 <div className="alert alert-danger">
@@ -162,6 +194,7 @@ export default function SignUp() {
                 name="rePassword"
                 placeholder="Enter your password again"
                 className="form-control"
+                autoComplete="new-password"
               />
               {myForm.errors.rePassword && myForm.touched.rePassword ? (
                 <div className="alert alert-danger">
@@ -174,9 +207,24 @@ export default function SignUp() {
 
             <button
               type="submit"
+              disabled={!(myForm.isValid&& myForm.dirty)}
               className="p-2 text-white rounded-3 btn bg-main"
             >
-              Register
+              
+
+
+              {isLoading?<ColorRing
+              visible={true}
+              height="30"
+              width="80"
+              ariaLabel="color-ring-loading"
+              wrapperStyle={{}}
+              wrapperClass="color-ring-wrapper"
+              colors={['#fff', '#fff', '#fff', '#fff', '#fff']}
+              />: "Register"}
+              
+
+
             </button>
           </form>
         </div>

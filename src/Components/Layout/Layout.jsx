@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
+import { Outlet } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
-import { Outlet } from "react-router-dom";
-import "./Layout.css";
+
 export default function Layout() {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState(null);
+
   return (
     <>
-      <Navbar />
-      <div className="container-fluid cstLayout  ">
-        <Outlet />
-      </div>
+      <Navbar setSearchQuery={setSearchQuery} />
+      
+        <Outlet context={{ searchQuery, setSearchResults, searchResults }} />
+       
       <Footer />
     </>
   );

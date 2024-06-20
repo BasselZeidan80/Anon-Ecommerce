@@ -1,0 +1,20 @@
+.imgCst {
+    /* background-color: red; */
+    height: 85vh;
+    width: 100%;
+}
+
+.imgCst img {
+
+    height: 100%;
+    width: 100%;
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+@media (max-width: 768px) {
+    .hide-on-small-screen {
+        display: none;
+    }
+}
