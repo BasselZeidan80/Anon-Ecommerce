@@ -1,5 +1,5 @@
  
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter, createHashRouter } from "react-router-dom";
 import Layout from "./Components/Layout/Layout";
 import Home from "./Components/Home/Home";
 import SignUp from "./Components/Register/SignUp";
@@ -9,15 +9,19 @@ import ProfileContextProvider from "./Context/Profile";
 import AuthContextProvider from "./Context/AuthContext";
 import ProtectedRoute from "./Components/ProtectRoute/ProtectedRoute";
 import Cart from "./Components/Cart/Cart";
+import { QueryClient, QueryClientProvider } from "react-query";
+import Products from "./Components/Products/Products";
 
-const routes = createBrowserRouter([
+const routes = createHashRouter([
   {
     path: "/",
     element: <Layout />,
     children: [
       { path: "Home", element: <ProtectedRoute> <Home /> </ProtectedRoute>  },
       { path: "Cart", element: <ProtectedRoute> <Cart /> </ProtectedRoute>  },
-      { index: true, element: <SignUp /> },
+      // { index: true, element: <SignUp /> },
+      { index: true, element: <ProtectedRoute> <Home /> </ProtectedRoute> },
+      { path: "products", element: <ProtectedRoute> <Products /> </ProtectedRoute> },
       { path: "SignUp", element: <SignUp /> },
       { path: "Login", element: <Login /> },
       { path: "*", element: <NotFound /> },
@@ -25,15 +29,19 @@ const routes = createBrowserRouter([
   },
 ]);
 
+
+
 export default function App() {
    
-
+ const myClient = new QueryClient()
   return (
     <>
-    <AuthContextProvider>
+    <QueryClientProvider client={myClient}>
+      <AuthContextProvider>
 
       <RouterProvider router={routes} />
       </AuthContextProvider>
+      </QueryClientProvider>
     </>
   );
 }

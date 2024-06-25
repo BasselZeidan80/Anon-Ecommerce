@@ -5,7 +5,7 @@ export const AuthContext= createContext()
 export default function AuthContextProvider ({children}) {
 
 const [Token, setToken] = useState(null)
-const [user, setUser] = useState(null)
+const [user, setUser] = useState({})
 
 
 //each refresh will lose data 
