@@ -60,7 +60,7 @@ const navigate =  useNavigate()
           }, 2000);
           
           setIsLoading(false);
-          navigate('/Home');
+          navigate('/');
         }
      
 
