@@ -12,7 +12,7 @@ import Cart from "./Components/Cart/Cart";
 import { QueryClient, QueryClientProvider } from "react-query";
 import Products from "./Components/Products/Products";
 
-const routes = createHashRouter([
+const routes = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
