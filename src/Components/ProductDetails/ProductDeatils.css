@@ -1,0 +1,53 @@
+.cardDeatails {
+    /* background-color: darkcyan; */
+    padding: 10px;
+    box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.749);
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+
+}
+
+.textTitle {
+    color: #1B3753;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+
+
+.line {
+    height: 2px;
+    width: 10%;
+    background-color: #1B3753;
+    position: absolute;
+}
+
+.priceDetails {
+    color: #1B3753;
+    font-weight: bold;
+}
+
+.paragraph {
+    color: #1B3753;
+    font-size: 20px;
+}
+
+.btnDetails {
+    border-radius: 10px;
+    background-color: white;
+    outline: #1B3753 1px solid;
+}
+
+.btnDetails:hover {
+    background-color: #1B3753;
+    color: #fff;
+}
+
+.ImageSlider {
+    background-color: red;
+    width: 100%;
+}

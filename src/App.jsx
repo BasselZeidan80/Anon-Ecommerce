@@ -1,5 +1,8 @@
- 
-import { RouterProvider, createBrowserRouter, createHashRouter } from "react-router-dom";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  createHashRouter,
+} from "react-router-dom";
 import Layout from "./Components/Layout/Layout";
 import Home from "./Components/Home/Home";
 import SignUp from "./Components/Register/SignUp";
@@ -11,17 +14,59 @@ import ProtectedRoute from "./Components/ProtectRoute/ProtectedRoute";
 import Cart from "./Components/Cart/Cart";
 import { QueryClient, QueryClientProvider } from "react-query";
 import Products from "./Components/Products/Products";
+import ProductDetails from "./Components/ProductDetails/ProductDetails";
 
 const routes = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
     children: [
-      { path: "Home", element: <ProtectedRoute> <Home /> </ProtectedRoute>  },
-      { path: "Cart", element: <ProtectedRoute> <Cart /> </ProtectedRoute>  },
+      {
+        path: "Home",
+        element: (
+          <ProtectedRoute>
+            {" "}
+            <Home />{" "}
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "Cart",
+        element: (
+          <ProtectedRoute>
+            {" "}
+            <Cart />{" "}
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "ProductDetails/:id",
+        element: (
+          <ProtectedRoute>
+            {" "}
+            <ProductDetails />{" "}
+          </ProtectedRoute>
+        ),
+      },
       // { index: true, element: <SignUp /> },
-      { index: true, element: <ProtectedRoute> <Home /> </ProtectedRoute> },
-      { path: "products", element: <ProtectedRoute> <Products /> </ProtectedRoute> },
+      {
+        index: true,
+        element: (
+          <ProtectedRoute>
+            {" "}
+            <Home />{" "}
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "products",
+        element: (
+          <ProtectedRoute>
+            {" "}
+            <Products />{" "}
+          </ProtectedRoute>
+        ),
+      },
       { path: "SignUp", element: <SignUp /> },
       { path: "Login", element: <Login /> },
       { path: "*", element: <NotFound /> },
@@ -29,18 +74,14 @@ const routes = createBrowserRouter([
   },
 ]);
 
-
-
 export default function App() {
-   
- const myClient = new QueryClient()
+  const myClient = new QueryClient();
   return (
     <>
-    <QueryClientProvider client={myClient}>
-      <AuthContextProvider>
-
-      <RouterProvider router={routes} />
-      </AuthContextProvider>
+      <QueryClientProvider client={myClient}>
+        <AuthContextProvider>
+          <RouterProvider router={routes} />
+        </AuthContextProvider>
       </QueryClientProvider>
     </>
   );
