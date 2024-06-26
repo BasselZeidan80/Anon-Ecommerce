@@ -1,7 +1,7 @@
 .cardDeatails {
     /* background-color: darkcyan; */
     padding: 10px;
-    box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.749);
+    box-shadow: 1px 2px 5px 5px rgba(0, 0, 0, 0.296);
     height: auto;
     display: flex;
     align-items: center;
