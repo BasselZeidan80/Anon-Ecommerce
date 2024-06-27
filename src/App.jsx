@@ -19,7 +19,7 @@ import Categories from "./Components/Categories/Categories";
 
 import SubCategories from "./Components/SubCategories/SubCategories";
 
-const routes = createBrowserRouter([
+const routes = createHashRouter([
   {
     path: "/",
     element: <Layout />,
