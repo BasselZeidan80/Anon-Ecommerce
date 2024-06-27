@@ -15,6 +15,9 @@ import Cart from "./Components/Cart/Cart";
 import { QueryClient, QueryClientProvider } from "react-query";
 import Products from "./Components/Products/Products";
 import ProductDetails from "./Components/ProductDetails/ProductDetails";
+import Categories from "./Components/Categories/Categories";
+
+import SubCategories from "./Components/SubCategories/SubCategories";
 
 const routes = createBrowserRouter([
   {
@@ -48,6 +51,14 @@ const routes = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      {
+        path: "category/:id/subcategories",
+        element: (
+          <ProtectedRoute>
+            <SubCategories />
+          </ProtectedRoute>
+        ),
+      },
       // { index: true, element: <SignUp /> },
       {
         index: true,
@@ -67,6 +78,16 @@ const routes = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+
+      {
+        path: "categories",
+        element: (
+          <ProtectedRoute>
+            <Categories />
+          </ProtectedRoute>
+        ),
+      },
+
       { path: "SignUp", element: <SignUp /> },
       { path: "Login", element: <Login /> },
       { path: "*", element: <NotFound /> },

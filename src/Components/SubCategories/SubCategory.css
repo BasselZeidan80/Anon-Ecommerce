@@ -1,0 +1,54 @@
+.navigation-tips-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+
+}
+
+.tip {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: #eae6fa;
+    border-radius: 10px;
+    padding: 10px 30px;
+    margin: 10px;
+    width: 40%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.icon {
+    position: absolute;
+    font-size: 2rem;
+    color: #7c4dff;
+    background-color: #EAE6FA;
+    padding: 10px;
+    height: 73px;
+    width: 73px;
+    border-radius: 50%;
+    box-shadow: 1px 2px 5px 5px rgba(0, 0, 0, 0.066);
+    margin-right: 15px;
+    top: 0;
+    left: -10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.text {
+    font-size: 1rem;
+}
+
+.text h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.text p {
+    margin: 5px 0 0;
+    color: #666;
+}

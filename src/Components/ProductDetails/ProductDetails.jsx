@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactSlider from "../ReactSlider/ReactSlider";
 import CategorySlider from "../CategorySlider/CategorySlider";
 import logo from "../../assets/images/banner-1.jpg";
@@ -9,8 +9,15 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { RotatingLines } from "react-loader-spinner";
 export default function ProductDetails() {
+  const [selectImage, setSelectImage] = useState(null);
   const { id } = useParams();
   console.log("===", id);
+
+  //handle image click
+  function handleImageClick(img) {
+    setSelectImage(img);
+  }
+
   function getProductDetails() {
     return axios.get(`https://ecommerce.routemisr.com/api/v1/products/${id}`);
   }
@@ -36,13 +43,18 @@ export default function ProductDetails() {
     );
   }
   const Pdetails = data.data.data;
+
   return (
     <>
       <div className="container vh-100 overflow-hidden d-flex align-items-center justify-content-center">
         <div className="row cardDeatails   w-100  ">
           <div className="col-md-6 col-lg-6 col-sm-12   ">
-            <div className="ImageSlider">
-              <img className="w-100" src={Pdetails.imageCover} alt="" />
+            <div className="mainImage">
+              <img
+                className="w-100"
+                src={selectImage || Pdetails.imageCover}
+                alt=""
+              />
             </div>
           </div>
           <div className="col-md-6 col-lg-6 col-sm-12 ps-5  ">
@@ -62,33 +74,25 @@ export default function ProductDetails() {
             <div className="d-flex my-4 align-items-center">
               <button className="btnDetails me-3 ">+</button>
               <span class="badge p-2 fs-6  rounded-circle me-3 text-bg-dark">
-                4
+                1
               </span>
               <button className="btnDetails">-</button>
             </div>
-            <button className="  btnDetails mb-5 w-25">add</button>
+            <button className="  btnDetails mb-5 w-25">Add To Cart</button>
             <p className="fw-bold">More Images:</p>
             <div className="imagesContainer pt-3 ">
-              <div className="d-flex align-items-center ">
-                {Pdetails.images.map((img) => (
-                  <div className="image1 w-25 pe-1">
+              <div className="d-flex align-items-center      ">
+                {Pdetails.images.map((img, idx) => (
+                  <div
+                    onClick={() => handleImageClick(img)}
+                    key={idx}
+                    id="ImagesDetails"
+                    style={{ cursor: "pointer" }}
+                    className="image1 w-25 pe-1"
+                  >
                     <img className="w-100" src={img} alt="catItem" />
                   </div>
                 ))}
-
-                {/* <div className="image2 pe-1">
-                  <img className="w-100" src={logo} alt="catItem" />
-                </div>
-
-                <div className="image3 pe-1">
-                  <img className="w-100" src={logo} alt="catItem" />
-                </div>
-                <div className="image3 pe-1">
-                  <img className="w-100" src={logo} alt="catItem" />
-                </div>
-                <div className="image3 pe-1">
-                  <img className="w-100" src={logo} alt="catItem" />
-                </div> */}
               </div>
             </div>
           </div>

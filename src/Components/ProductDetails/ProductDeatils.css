@@ -1,14 +1,12 @@
 .cardDeatails {
-    /* background-color: darkcyan; */
     padding: 10px;
-    box-shadow: 1px 2px 5px 5px rgba(0, 0, 0, 0.296);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     height: auto;
     display: flex;
     align-items: center;
     justify-content: center;
-
-
-
+    flex-wrap: wrap;
+    /* Ensure items wrap on smaller screens */
 }
 
 .textTitle {
@@ -16,8 +14,6 @@
     position: relative;
     margin-bottom: 20px;
 }
-
-
 
 .line {
     height: 2px;
@@ -40,6 +36,8 @@
     border-radius: 10px;
     background-color: white;
     outline: #1B3753 1px solid;
+    color: #1B3753;
+    font-weight: bold;
 }
 
 .btnDetails:hover {
@@ -47,7 +45,130 @@
     color: #fff;
 }
 
-.ImageSlider {
+.mainImage {
     background-color: red;
     width: 100%;
+}
+
+#ImagesDetails {
+
+    box-shadow: rgba(9, 30, 66, 0.526) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+}
+
+/* Media Queries */
+
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) {
+    .cardDeatails {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .mainImage {
+        margin-bottom: 20px;
+    }
+
+    .textTitle,
+    .priceDetails,
+    .paragraph,
+    .btnDetails,
+    .imagesContainer {
+        text-align: center;
+        width: 100%;
+    }
+
+    .imagesContainer {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .image1 {
+        width: 50%;
+        margin-bottom: 10px;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (max-width: 768px) {
+    .cardDeatails {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .mainImage {
+        margin-bottom: 20px;
+    }
+
+    .textTitle,
+    .priceDetails,
+    .paragraph,
+    .btnDetails,
+    .imagesContainer {
+        text-align: center;
+        width: 100%;
+    }
+
+    .imagesContainer {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .image1 {
+        width: 33%;
+        margin-bottom: 10px;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (max-width: 992px) {
+    .cardDeatails {
+        flex-direction: row;
+    }
+
+    .textTitle,
+    .priceDetails,
+    .paragraph,
+    .btnDetails,
+    .imagesContainer {
+        text-align: left;
+        width: auto;
+    }
+
+    .imagesContainer {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .image1 {
+        width: 25%;
+        margin-bottom: 10px;
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (max-width: 1200px) {
+    .cardDeatails {
+        flex-direction: row;
+    }
+
+    .textTitle,
+    .priceDetails,
+    .paragraph,
+    .btnDetails,
+    .imagesContainer {
+        text-align: left;
+        width: auto;
+    }
+
+    .imagesContainer {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .image1 {
+        width: 20%;
+        margin-bottom: 10px;
+    }
 }
