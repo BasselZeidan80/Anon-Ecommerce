@@ -8,6 +8,8 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { RotatingLines } from "react-loader-spinner";
+import placeHolderImage from "../../assets/images/placeHolderImage.png";
+
 export default function ProductDetails() {
   const [selectImage, setSelectImage] = useState(null);
   const { id } = useParams();
@@ -52,7 +54,7 @@ export default function ProductDetails() {
             <div className="mainImage">
               <img
                 className="w-100"
-                src={selectImage || Pdetails.imageCover}
+                src={selectImage || Pdetails.imageCover || placeHolderImage}
                 alt=""
               />
             </div>
@@ -90,7 +92,11 @@ export default function ProductDetails() {
                     style={{ cursor: "pointer" }}
                     className="image1 w-25 pe-1"
                   >
-                    <img className="w-100" src={img} alt="catItem" />
+                    <img
+                      className="w-100"
+                      src={img || placeHolderImage}
+                      alt="catItem"
+                    />
                   </div>
                 ))}
               </div>

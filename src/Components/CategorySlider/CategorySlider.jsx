@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { RotatingLines } from "react-loader-spinner";
+import placeHolderImage from "../../assets/images/placeHolderImage.png";
 
 function CategorySlider() {
   const settings = {
@@ -21,31 +22,31 @@ function CategorySlider() {
           slidesToShow: 3,
           slidesToScroll: 3,
           infinite: true,
-        }
+        },
       },
       {
         breakpoint: 600,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
-          initialSlide: 2
-        }
+          initialSlide: 2,
+        },
       },
       {
         breakpoint: 480,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
-    ]
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   async function CategoryData() {
-    return await axios.get('https://ecommerce.routemisr.com/api/v1/categories');
+    return await axios.get("https://ecommerce.routemisr.com/api/v1/categories");
   }
 
-  const { data, isLoading } = useQuery('CategorySlider', CategoryData);
+  const { data, isLoading } = useQuery("CategorySlider", CategoryData);
 
   if (isLoading) {
     return (
@@ -68,33 +69,33 @@ function CategorySlider() {
 
   return (
     <>
-    <div className="slider-container  ">
-      <Slider {...settings}>
-        {originalData.map((category, idx) => (
-          <div key={idx}>
-            <img
-              style={{ height: "150px", objectFit: "cover" }}
-              className="w-100"
-              src={category.image}
-              alt={category.name}
-            />
-          </div>
-        ))}
-      </Slider>
+      <div className="slider-container  ">
+        <Slider {...settings}>
+          {originalData.map((category, idx) => (
+            <div key={idx}>
+              <img
+                style={{ height: "150px", objectFit: "cover" }}
+                className="w-100"
+                src={category.image || placeHolderImage}
+                alt={category.name}
+              />
+            </div>
+          ))}
+        </Slider>
 
-      <Slider {...settings}>
-        {reversedData.map((category, idx) => (
-          <div key={idx}>
-            <img
-              style={{ height: "150px", objectFit: "cover" }}
-              className="w-100"
-              src={category.image}
-              alt={category.name}
-            />
-          </div>
-        ))}
-      </Slider>
-    </div>
+        <Slider {...settings}>
+          {reversedData.map((category, idx) => (
+            <div key={idx}>
+              <img
+                style={{ height: "150px", objectFit: "cover" }}
+                className="w-100"
+                src={category.image}
+                alt={category.name}
+              />
+            </div>
+          ))}
+        </Slider>
+      </div>
     </>
   );
 }

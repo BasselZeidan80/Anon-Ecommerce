@@ -7,6 +7,7 @@ import { Link, useOutletContext } from "react-router-dom";
 import StarRating from "../StartRating/StarRating";
 import "./Home.css";
 import { date } from "yup";
+import placeHolderImage from "../../assets/images/placeHolderImage.png";
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -119,7 +120,7 @@ export default function Home() {
                 <Link to={`/ProductDetails/${ele.id}`}>
                   <div className="product-image">
                     <img
-                      src={ele.imageCover}
+                      src={ele.imageCover || placeHolderImage}
                       className="w-100"
                       alt="Product Image"
                     />

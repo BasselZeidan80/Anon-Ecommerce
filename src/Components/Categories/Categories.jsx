@@ -5,6 +5,8 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import { RotatingLines } from "react-loader-spinner";
 import { Link } from "react-router-dom";
+import placeHolderImage from "../../assets/images/placeHolderImage.png";
+
 const Categories = () => {
   function fetchCategory() {
     return axios.get(`https://ecommerce.routemisr.com/api/v1/categories`);
@@ -34,7 +36,11 @@ const Categories = () => {
           <div key={idx} className="col-md-4 col-lg-4 col-lg-3">
             <div className="categories">
               <div className="category">
-                <img className="w-100" src={item.image} alt="" />
+                <img
+                  className="w-100"
+                  src={item.image || placeHolderImage}
+                  alt=""
+                />
                 <div className="layer">
                   <div className="category-info">
                     <h2>{item.name} </h2>

@@ -9,6 +9,7 @@ import ReactSlider from "../ReactSlider/ReactSlider";
 import "./Products.css";
 import CategorySlider from "../CategorySlider/CategorySlider";
 import { date } from "yup";
+import placeHolderImage from "../../assets/images/placeHolderImage.png";
 export default function Products() {
   const { searchQuery, setSearchResults, searchResults } = useOutletContext();
 
@@ -108,7 +109,7 @@ export default function Products() {
                 <Link to={`/ProductDetails/${ele.id}`}>
                   <div className="product-image">
                     <img
-                      src={ele.imageCover}
+                      src={ele.imageCover || placeHolderImage}
                       className="w-100"
                       alt="Product Image"
                     />
