@@ -11,10 +11,11 @@
     display: flex;
     align-items: center;
     background-color: #eae6fa;
-    border-radius: 10px;
-    padding: 10px 30px;
+    border-radius: 30px;
+    padding: 10px 50px;
+    cursor: pointer;
     margin: 10px;
-    width: 40%;
+    width: 100%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -44,7 +45,7 @@
 
 .text h3 {
     margin: 0;
-    font-size: 1.2rem;
+    font-size: 20px;
     color: #333;
 }
 

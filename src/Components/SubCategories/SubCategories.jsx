@@ -40,14 +40,16 @@ export default function SubCategories() {
       <div className="container">
         <div className="row">
           {data.data.data.map((ele, idx) => (
-            <div key={idx} className="navigation-tips-container">
-              <div className="tip">
-                <div className="icon">
-                  <i className="fa fa-paper-plane"></i>
-                </div>
-                <div className="text">
-                  <h3>{ele.name}</h3>
-                  <p>{ele.slug}</p>
+            <div className="col-md-4 col-lg-4">
+              <div key={idx} className="navigation-tips-container">
+                <div className="tip">
+                  <div className="icon">
+                    <i className="fa fa-paper-plane"></i>
+                  </div>
+                  <div className="text">
+                    <h3>{ele.name}</h3>
+                    <p>{ele.slug}</p>
+                  </div>
                 </div>
               </div>
             </div>
