@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import "../Home/Home.css";
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { RotatingLines } from "react-loader-spinner";
@@ -10,10 +10,21 @@ import "./Products.css";
 import CategorySlider from "../CategorySlider/CategorySlider";
 import { date } from "yup";
 import placeHolderImage from "../../assets/images/placeHolderImage.png";
+import { CartContext } from "../../Context/CartContext";
 export default function Products() {
   const { searchQuery, setSearchResults, searchResults } = useOutletContext();
 
-  const navigate = useNavigate();
+ const {addToCart} =  useContext(CartContext)
+
+
+
+ async function addProductToCart(id){
+   const response = await addToCart(id)
+   console.log(response);
+   
+  //  console.log('res==============================', res);
+  console.log('hiiii',id)
+ }
   // use react query to handle cache data
   const fetchProducts = async () => {
     const res = await axios.get(
@@ -142,7 +153,7 @@ export default function Products() {
                   )}
                   <StarRating rating={ele.ratingsAverage} />
                   <div className="buttons">
-                    <button className="add-to-cart">
+                    <button onClick={()=> addProductToCart(ele.id)} className="add-to-cart">
                       Add to Cart{" "}
                       <i class="fa-solid fa-cart-shopping cartIcon"></i>
                     </button>

@@ -1,0 +1,31 @@
+.TotalCart {
+    background-color: #FFD28D;
+}
+
+.productItems {
+    height: 80vh;
+    overflow: auto;
+}
+
+.lineRow {
+    height: 2px;
+}
+
+
+.productItems::-webkit-scrollbar {
+    color: #FFD28D;
+    /* border: 1px solid black; */
+    border-radius: 30px;
+    padding: 10px;
+    background-color: #FFD28D;
+}
+
+.productItems::-webkit-scrollbar-button {
+    background-color: rgba(0, 0, 0, 0.433);
+    border-radius: 30px;
+}
+
+.productItems::-webkit-scrollbar-thumb {
+    background-color: #dd9529cf;
+    border-radius: 30px;
+}

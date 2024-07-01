@@ -18,6 +18,7 @@ import ProductDetails from "./Components/ProductDetails/ProductDetails";
 import Categories from "./Components/Categories/Categories";
 
 import SubCategories from "./Components/SubCategories/SubCategories";
+import CartContextProvider from "./Context/CartContext";
 
 const routes = createHashRouter([
   {
@@ -101,7 +102,10 @@ export default function App() {
     <>
       <QueryClientProvider client={myClient}>
         <AuthContextProvider>
+          <CartContextProvider>
           <RouterProvider router={routes} />
+          </CartContextProvider>
+
         </AuthContextProvider>
       </QueryClientProvider>
     </>
