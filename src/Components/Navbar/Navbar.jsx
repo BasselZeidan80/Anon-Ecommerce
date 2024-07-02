@@ -6,8 +6,8 @@ import "./Navbar.css";
 import { AuthContext } from "../../Context/AuthContext";
 export default function Navbar({ setSearchQuery }) {
   const { user, myToken, setToken } = useContext(AuthContext);
-  console.log("user==", user);
-  console.log("token In Nvabar ==", myToken);
+  // console.log("user==", user);
+  // console.log("token In Nvabar ==", myToken);
   const [inputValue, setInputValue] = useState("");
   const navigate = useNavigate();
 

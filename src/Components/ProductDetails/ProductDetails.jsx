@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import ReactSlider from "../ReactSlider/ReactSlider";
 import CategorySlider from "../CategorySlider/CategorySlider";
 import logo from "../../assets/images/banner-1.jpg";
@@ -7,13 +7,51 @@ import StarRating from "../StartRating/StarRating";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import axios from "axios";
-import { RotatingLines } from "react-loader-spinner";
+import { ColorRing, RotatingLines } from "react-loader-spinner";
 import placeHolderImage from "../../assets/images/placeHolderImage.png";
+import { CartContext } from "../../Context/CartContext";
+import { Bounce, toast } from "react-toastify";
 
 export default function ProductDetails() {
+  const { addToCart } = useContext(CartContext);
   const [selectImage, setSelectImage] = useState(null);
+  const [isLoad, setIsLoad] = useState(false);
   const { id } = useParams();
-  console.log("===", id);
+
+  async function addProduct(id) {
+    setIsLoad(true);
+    let response = await addToCart(id);
+    console.log("======responseAddToCart ====", response.data.status);
+    if (response.data.status == "success") {
+      setIsLoad(false);
+      toast.success("Product added successfully to your cart!", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+
+      // toast.promise("ssssss");
+    } else {
+      toast.error("Something went wrong!", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      // toast.error("Something went wrong");
+    }
+  }
 
   //handle image click
   function handleImageClick(img) {
@@ -27,7 +65,6 @@ export default function ProductDetails() {
     `ProductDetails-${id}`,
     getProductDetails
   );
-  console.log("data====sss", data);
 
   if (isLoading) {
     return (
@@ -80,7 +117,24 @@ export default function ProductDetails() {
               </span>
               <button className="btnDetails">-</button>
             </div>
-            <button className="  btnDetails mb-5 w-25">Add To Cart</button>
+            <button
+              onClick={() => addProduct(data.data.data.id)}
+              className="  btnDetails mb-5 w-25"
+            >
+              {isLoad ? (
+                <ColorRing
+                  visible={true}
+                  height="30"
+                  width="80"
+                  ariaLabel="color-ring-loading"
+                  wrapperStyle={{}}
+                  wrapperClass="color-ring-wrapper"
+                  colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
+                />
+              ) : (
+                " Add To Cart"
+              )}
+            </button>
             <p className="fw-bold">More Images:</p>
             <div className="imagesContainer pt-3 ">
               <div className="d-flex align-items-center      ">

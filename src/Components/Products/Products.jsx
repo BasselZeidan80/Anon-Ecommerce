@@ -1,7 +1,7 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../Home/Home.css";
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
-import { RotatingLines } from "react-loader-spinner";
+import { ColorRing, RotatingLines } from "react-loader-spinner";
 import axios from "axios";
 import { useQuery } from "react-query";
 import StarRating from "../StartRating/StarRating";
@@ -11,20 +11,48 @@ import CategorySlider from "../CategorySlider/CategorySlider";
 import { date } from "yup";
 import placeHolderImage from "../../assets/images/placeHolderImage.png";
 import { CartContext } from "../../Context/CartContext";
+import { Bounce, toast } from "react-toastify";
 export default function Products() {
   const { searchQuery, setSearchResults, searchResults } = useOutletContext();
+  const { addToCart } = useContext(CartContext);
+  const [isLoad, setIsLoad] = useState(false);
 
- const {addToCart} =  useContext(CartContext)
+  async function addProduct(id) {
+    setIsLoad(true);
+    let response = await addToCart(id);
+    console.log("======responseAddToCart ====", response.data.status);
+    if (response.data.status == "success") {
+      setIsLoad(false);
+      toast.success("Product added successfully to your cart!", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
 
+      // toast.promise("ssssss");
+    } else {
+      setIsLoad(false);
+      toast.error("Something went wrong!", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      // toast.error("Something went wrong");
+    }
+  }
 
-
- async function addProductToCart(id){
-   const response = await addToCart(id)
-   console.log(response);
-   
-  //  console.log('res==============================', res);
-  console.log('hiiii',id)
- }
   // use react query to handle cache data
   const fetchProducts = async () => {
     const res = await axios.get(
@@ -153,8 +181,24 @@ export default function Products() {
                   )}
                   <StarRating rating={ele.ratingsAverage} />
                   <div className="buttons">
-                    <button onClick={()=> addProductToCart(ele.id)} className="add-to-cart">
-                      Add to Cart{" "}
+                    <button
+                      onClick={() => addProduct(ele.id)}
+                      className="add-to-cart"
+                    >
+                      {isLoad ? (
+                        <ColorRing
+                          visible={true}
+                          height="30"
+                          width="80"
+                          ariaLabel="color-ring-loading"
+                          wrapperStyle={{}}
+                          wrapperClass="color-ring-wrapper"
+                          colors={["#fff", "#fff", "#fff", "#fff", "#fff"]}
+                        />
+                      ) : (
+                        " Add To Cart"
+                      )}
+
                       <i class="fa-solid fa-cart-shopping cartIcon"></i>
                     </button>
                     <button className="add-to-favorite">

@@ -4,6 +4,9 @@ import {
   createHashRouter,
 } from "react-router-dom";
 import Layout from "./Components/Layout/Layout";
+// import { Toaster } from "react-hot-toast";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Home from "./Components/Home/Home";
 import SignUp from "./Components/Register/SignUp";
 import Login from "./Components/Register/Login";
@@ -103,9 +106,9 @@ export default function App() {
       <QueryClientProvider client={myClient}>
         <AuthContextProvider>
           <CartContextProvider>
-          <RouterProvider router={routes} />
+            <RouterProvider router={routes} />
           </CartContextProvider>
-
+          <ToastContainer />
         </AuthContextProvider>
       </QueryClientProvider>
     </>
