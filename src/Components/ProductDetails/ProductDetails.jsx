@@ -68,7 +68,7 @@ export default function ProductDetails() {
 
   if (isLoading) {
     return (
-      <div className="loader d-flex justify-content-center align-items-center vh-100 opacity-50 bg-primary">
+      <div className="loader d-flex justify-content-center align-items-center vh-100 opacity-50 ">
         <RotatingLines
           visible={true}
           height="96"

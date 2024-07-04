@@ -1,0 +1,21 @@
+.form {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: gray;
+}
+
+.circle {
+    z-index: 44;
+}
+
+.form .line {
+    background-color: red;
+    position: absolute;
+    top: 35%;
+    transform: translateY(-50%);
+    right: 40%;
+}

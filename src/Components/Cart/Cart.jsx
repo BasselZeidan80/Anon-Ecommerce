@@ -3,8 +3,12 @@ import "./Cart.css";
 import { CartContext } from "../../Context/CartContext";
 import { useQuery } from "react-query";
 import { RotatingLines } from "react-loader-spinner";
+import { toast } from "react-toastify";
 export default function Cart() {
-  const { numOfCart, totalCartPrice, allProducts } = useContext(CartContext);
+  const { numOfCart, totalCartPrice, RemoveItem, allProducts, UpdateCart } =
+    useContext(CartContext);
+  const [count, setCount] = useState(0);
+
   // const [cartDetails, setCardDetails] = useState(null);
 
   // async function getCart() {
@@ -37,9 +41,26 @@ export default function Cart() {
   // }
   // console.log(data?.data.data.products);
 
+  async function updateQuantityCart(id, newCount) {
+    const response = await UpdateCart(id, newCount);
+    console.log(response);
+    if (response) {
+      toast.success("Updated");
+    }
+  }
+
+  async function removeProduct(id) {
+    const res = await RemoveItem(id);
+    if (res) {
+      toast.success("Removed");
+    } else {
+      toast.error("error...");
+    }
+  }
+
   if (!allProducts) {
     return (
-      <div className="loader d-flex justify-content-center align-items-center vh-100 opacity-50 bg-primary">
+      <div className="loader d-flex justify-content-center align-items-center vh-100 opacity-50 ">
         <RotatingLines
           visible={true}
           height="96"
@@ -82,7 +103,7 @@ export default function Cart() {
               </div>
               <div className="lineRow w-100 border mt-4 bg-danger "></div>
 
-              {allProducts.map((ele, idx) => (
+              {allProducts?.map((ele, idx) => (
                 <div key={idx} className="row border-bottom">
                   <div className="col-md-6 ps-5">
                     <div className="d-flex mt-4">
@@ -97,8 +118,12 @@ export default function Cart() {
                       <div className="text px-2 w-75">
                         <h6>{ele.product.category.name}</h6>
                         <p className="mb-3">{ele.product.title}</p>
-                        <p>color</p>
-                        <p>size</p>
+                        <button
+                          onClick={() => removeProduct(ele.product.id)}
+                          className="btn btn-outline-danger"
+                        >
+                          <i class="fa-solid fa-trash"></i>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -110,18 +135,29 @@ export default function Cart() {
 
                   <div className="col-md-2 text-center">
                     <div className="d-flex mt-4  align-items-center justify-content-center">
-                      <button className="btn btn-outline-dark pt-0 pb-0">
+                      <button
+                        disabled={ele.count <= 1}
+                        onClick={() =>
+                          updateQuantityCart(ele.product.id, ele.count - 1)
+                        }
+                        className="btn btn-outline-dark pt-0 pb-0"
+                      >
                         -
                       </button>
                       <p className="px-3 fs-5 pt-2 ">{ele.count}</p>
-                      <button className="btn btn-outline-dark pt-0 pb-0">
+                      <button
+                        onClick={() =>
+                          updateQuantityCart(ele.product.id, ele.count + 1)
+                        }
+                        className="btn btn-outline-dark pt-0 pb-0"
+                      >
                         +
                       </button>
                     </div>
                   </div>
                   <div className="col-md-2 text-center">
                     <p className="text-warning fw-bolder mt-4 pt-2">
-                      {ele.price}$
+                      {ele.price * ele.count}$
                     </p>
                   </div>
                 </div>

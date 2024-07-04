@@ -4,8 +4,10 @@ import svgIcon from "../../assets/images/logo/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { AuthContext } from "../../Context/AuthContext";
+import { CartContext } from "../../Context/CartContext";
 export default function Navbar({ setSearchQuery }) {
   const { user, myToken, setToken } = useContext(AuthContext);
+  const { numOfCart } = useContext(CartContext);
   // console.log("user==", user);
   // console.log("token In Nvabar ==", myToken);
   const [inputValue, setInputValue] = useState("");
@@ -63,11 +65,7 @@ export default function Navbar({ setSearchQuery }) {
                     Home
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/Cart">
-                    Cart
-                  </Link>
-                </li>
+
                 <li className="nav-item">
                   <Link className="nav-link" to="/products">
                     Products
@@ -82,6 +80,15 @@ export default function Navbar({ setSearchQuery }) {
                   <Link className="nav-link" to="/Brands">
                     Brands
                   </Link>
+                </li>
+                <li className="nav-item position-relative">
+                  <Link className="nav-link" to="/Cart">
+                    Cart
+                  </Link>
+
+                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {numOfCart ?? ""}
+                  </span>
                 </li>
               </ul>
             ) : (

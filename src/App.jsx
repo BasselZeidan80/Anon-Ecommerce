@@ -22,6 +22,7 @@ import Categories from "./Components/Categories/Categories";
 
 import SubCategories from "./Components/SubCategories/SubCategories";
 import CartContextProvider from "./Context/CartContext";
+import Brands from "./Components/Brands/Brands";
 
 const routes = createHashRouter([
   {
@@ -43,6 +44,14 @@ const routes = createHashRouter([
           <ProtectedRoute>
             {" "}
             <Cart />{" "}
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "Brands",
+        element: (
+          <ProtectedRoute>
+            <Brands />
           </ProtectedRoute>
         ),
       },
