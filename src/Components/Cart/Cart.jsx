@@ -4,8 +4,10 @@ import { CartContext } from "../../Context/CartContext";
 import { useQuery } from "react-query";
 import { RotatingLines } from "react-loader-spinner";
 import { toast } from "react-toastify";
+import axios from "axios";
+import CartEmpty from "../CartEmpty/CartEmpty";
 export default function Cart() {
-  const { numOfCart, totalCartPrice, RemoveItem, allProducts, UpdateCart } =
+  const { clearCart,getCartUser,cartID, numOfCart, totalCartPrice, RemoveItem, allProducts, UpdateCart } =
     useContext(CartContext);
   const [count, setCount] = useState(0);
 
@@ -41,6 +43,8 @@ export default function Cart() {
   // }
   // console.log(data?.data.data.products);
 
+
+
   async function updateQuantityCart(id, newCount) {
     const response = await UpdateCart(id, newCount);
     console.log(response);
@@ -56,6 +60,37 @@ export default function Cart() {
     } else {
       toast.error("error...");
     }
+  }
+
+async function clearAllProducts(){
+  const res = await  clearCart()
+  if(res){
+    toast.success('cart has been Cleared..')
+  }else{
+    toast.error('error occured .. ')
+  }
+}
+
+
+
+ async function createCashOrder(cartID){
+    const shipping = {
+      "shippingAddress":{
+          "details": document.getElementById('details').value,
+          "phone": document.getElementById('phone').value,
+          "city": document.getElementById('city').value
+          }
+  }
+  console.log(shipping);
+     const res = await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/${cartID}`,shipping,{headers:{token: localStorage.getItem('tkn')}})
+     console.log('confirmation payment',res.data);
+     if(res.data.status == "success"){
+      toast.success('Payemnet Successfully')
+      getCartUser()
+
+     }else{
+      toast.error('error occured ... ')
+     }
   }
 
   if (!allProducts) {
@@ -75,8 +110,9 @@ export default function Cart() {
   }
 
   return (
+
     <>
-      <div className="container-fluid ">
+    {allProducts.length? <div className="container-fluid ">
         <div className="row bg-body-secondary">
           <div className="col-md-9 bg-body-secondary py-4">
             <div className="header py-3 ps-5 ">
@@ -84,6 +120,7 @@ export default function Cart() {
               <p>
                 <span className="fw-bold">{numOfCart} items </span>in your bag
               </p>
+              <button onClick={clearAllProducts} className="btn btn-danger">clear Cart</button>
             </div>
 
             <div className="productItems bg-white p-4 rounded-5">
@@ -169,20 +206,23 @@ export default function Cart() {
               <h3 className="fw-bold mb-4 px-4">Calculating shopping</h3>
               <div className="form text-center px-4">
                 <input
+                id="city"
                   type="text"
                   className="form-control  rounded-4 w-100"
-                  placeholder="Country"
+                  placeholder="City"
                 />
                 <div className="d-flex mt-2">
                   <input
+                  id="details"
                     type="text"
                     className="form-control rounded-4 w-50"
-                    placeholder="Birth Date"
+                    placeholder="details"
                   />
                   <input
+                  id="phone"
                     type="text"
                     className="form-control w-50 rounded-4"
-                    placeholder="zip code"
+                    placeholder="phone"
                   />
                 </div>
                 <button
@@ -239,6 +279,7 @@ export default function Cart() {
                   <button
                     type="submit"
                     className="w-100 rounded-4 mt-1 btn btn-light "
+                    onClick={()=> createCashOrder(cartID)}
                   >
                     Apply
                   </button>
@@ -247,7 +288,8 @@ export default function Cart() {
             </div>
           </div>
         </div>
-      </div>
+      </div> : <CartEmpty />  }
+      
     </>
   );
 }

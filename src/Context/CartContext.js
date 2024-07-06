@@ -11,6 +11,7 @@ export default function CartContextProvider({ children }) {
   const [totalCartPrice, setTotalCartPrice] = useState(0);
   const [allProducts, setAllProducts] = useState(null);
   const [count, setCount] = useState(0);
+  const [cartID,setCartID] = useState(null)
 
   // console.log("x== from cart == ", myToken);
   function addToCart(productId) {
@@ -40,6 +41,7 @@ export default function CartContextProvider({ children }) {
         setAllProducts(res.data.data.products);
         setNumberOfCart(res.data.numOfCartItems);
         setTotalCartPrice(res.data.data.totalCartPrice);
+        setCartID(res.data.data._id)
         console.log(res);
       })
       .catch((err) => {
@@ -89,6 +91,30 @@ export default function CartContextProvider({ children }) {
       });
     return Flag;
   }
+
+
+
+  async function clearCart() {
+    const Flag = await axios
+      .delete(`https://ecommerce.routemisr.com/api/v1/cart`, {
+        headers: { token: localStorage.getItem("tkn") },
+      })
+      .then((res) => {
+        setNumberOfCart(null);
+        setTotalCartPrice(0);
+        setAllProducts([]);
+        console.log(res);
+        return true;
+      })
+      .catch((error) => {
+        console.log(error);
+
+        return false;
+      });
+    return Flag;
+  }
+
+
   useEffect(() => {
     getCartUser();
   }, [myToken]);
@@ -103,6 +129,8 @@ export default function CartContextProvider({ children }) {
         totalCartPrice,
         allProducts,
         UpdateCart,
+        cartID,
+        clearCart
       }}
     >
       {children}
