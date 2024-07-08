@@ -10,7 +10,6 @@ import "react-toastify/dist/ReactToastify.css";
 import Home from "./Components/Home/Home";
 import SignUp from "./Components/Register/SignUp";
 import Login from "./Components/Register/Login";
-import NotFound from "./Components/NotFound/NotFound";
 import ProfileContextProvider from "./Context/Profile";
 import AuthContextProvider from "./Context/AuthContext";
 import ProtectedRoute from "./Components/ProtectRoute/ProtectedRoute";
@@ -23,6 +22,8 @@ import Categories from "./Components/Categories/Categories";
 import SubCategories from "./Components/SubCategories/SubCategories";
 import CartContextProvider from "./Context/CartContext";
 import Brands from "./Components/Brands/Brands";
+import NotFound from "./Components/NotFoundPage/NotFound";
+import SubBrands from "./Components/SubBrands/SubBrands";
 
 const routes = createHashRouter([
   {
@@ -59,7 +60,6 @@ const routes = createHashRouter([
         path: "ProductDetails/:id",
         element: (
           <ProtectedRoute>
-            {" "}
             <ProductDetails />{" "}
           </ProtectedRoute>
         ),
@@ -69,6 +69,14 @@ const routes = createHashRouter([
         element: (
           <ProtectedRoute>
             <SubCategories />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "SubBrands/:id",
+        element: (
+          <ProtectedRoute>
+            <SubBrands />
           </ProtectedRoute>
         ),
       },

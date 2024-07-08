@@ -1,35 +1,34 @@
-// src/CartEmpty.js
-import React from 'react';
-import './CartEmpty.css'; // Optional for styling
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-const CartEmpty = () => {
-    const nav = useNavigate()
-  return <>
-  
-  <div className="container d-flex align-items-center justify-content-center flex-column">
-    <div className="imageCartEm">
-        <img className='w-100' src={require('../../assets/images/cartEmptyImage.png')} alt="" />
+export default function CartEmpty() {
+  return (
+    <>
+      <div className="container">
+        <div className="d-flex align-items-center justify-content-center flex-column">
+          <figure>
+            <img
+              className=" w-100"
+              src={require("../../assets/images/emptyCart.png")}
+              alt="emptyPage"
+            />
+          </figure>
+          <h2>Your Cart is Empty </h2>
+          <p>
+            Look like you have not added anything to you cart . Go ahead &
+            explore top Categoies.
+          </p>
 
-    </div>
-    <div className="textEmpty">
-    <h2 className='fade-in-text' >Your Cart is Empty</h2>
-    </div>
-    <button  onClick={()=> nav('/Home')}  className=' my-4 btn btn-success'>Go To Shopping</button>
-  </div>
-  
-  </> 
-//   (
-//     <div className="cart-empty">
-//       <img 
-//         src= {require('../../assets/images/cartEmptyImage.png')}
-//         alt="Empty cart"
-//         className=" cart-empty-image"
-//       />
-//       <h2>Your Cart is Empty</h2>
-//       <button onClick={()=> nav('/Home')} className='btn btn-success'>Go To Shopping</button>
-//     </div>
-//   );
-};
-
-export default CartEmpty;
+          <Link
+            to={"/Products"}
+            className="btn btn-success w-50 mb-5"
+            type="button"
+          >
+            {" "}
+            Go To Explore
+          </Link>
+        </div>
+      </div>
+    </>
+  );
+}

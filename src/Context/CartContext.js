@@ -11,7 +11,7 @@ export default function CartContextProvider({ children }) {
   const [totalCartPrice, setTotalCartPrice] = useState(0);
   const [allProducts, setAllProducts] = useState(null);
   const [count, setCount] = useState(0);
-  const [cartID,setCartID] = useState(null)
+  const [cartID, setCartID] = useState(null);
 
   // console.log("x== from cart == ", myToken);
   function addToCart(productId) {
@@ -32,8 +32,8 @@ export default function CartContextProvider({ children }) {
       .catch((err) => err);
   }
 
-  function getCartUser() {
-    axios
+  async function getCartUser() {
+    const flag = await axios
       .get("https://ecommerce.routemisr.com/api/v1/cart", {
         headers: { token: localStorage.getItem("tkn") },
       })
@@ -41,14 +41,45 @@ export default function CartContextProvider({ children }) {
         setAllProducts(res.data.data.products);
         setNumberOfCart(res.data.numOfCartItems);
         setTotalCartPrice(res.data.data.totalCartPrice);
-        setCartID(res.data.data._id)
+        setCartID(res.data.data._id);
+        localStorage.setItem("userId", res.data.data.cartOwner);
         console.log(res);
+        return true;
       })
       .catch((err) => {
         console.log(err);
+        return false;
       });
+    return flag;
   }
 
+  /////////////////////////////////////////////////////
+  // function getUserCart() {
+  //   axios
+  //     .get("https://ecommerce.routemisr.com/api/v1/cart", {
+  //       headers: { token: localStorage.getItem("token") },
+  //     })
+  //     .then((res) => {
+  //       console.log("res", res.data);
+  //       setAllProducts(res.data.data.products);
+
+  //       console.log("All products ", res.data.data.products);
+  //       setNumOfCart(res.data.numOfCartItems);
+  //       console.log("num oF Carts ", res.data.numOfCartItems);
+  //       setTotalCartPrice(res.data.data.totalCartPrice);
+  //       console.log("total Price", res.data.data.totalCartPrice);
+  //       setCartID(res.data.data._id);
+  //       console.log("CartID  ", res.data.data._id);
+  //       // setCartOwner(res.data.data.cartOwner)
+  //       localStorage.setItem("userId", res.data.data.cartOwner);
+  //       // console.log("cartOwner" , res.data.data.cartOwner);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }
+
+  ///////////////////////////////////////////////////
   async function UpdateCart(id, newCount) {
     const Flag = await axios
       .put(
@@ -92,8 +123,6 @@ export default function CartContextProvider({ children }) {
     return Flag;
   }
 
-
-
   async function clearCart() {
     const Flag = await axios
       .delete(`https://ecommerce.routemisr.com/api/v1/cart`, {
@@ -114,9 +143,15 @@ export default function CartContextProvider({ children }) {
     return Flag;
   }
 
-
   useEffect(() => {
-    getCartUser();
+    if (myToken) {
+      getCartUser();
+    } else {
+      setNumberOfCart(null);
+      setTotalCartPrice(0);
+      setAllProducts([]);
+      setCartID(null);
+    }
   }, [myToken]);
 
   return (
@@ -130,7 +165,7 @@ export default function CartContextProvider({ children }) {
         allProducts,
         UpdateCart,
         cartID,
-        clearCart
+        clearCart,
       }}
     >
       {children}
